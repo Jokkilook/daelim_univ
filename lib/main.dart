@@ -1,4 +1,6 @@
-import 'package:daelim_univ/screens/login_screen.dart';
+import 'package:daelim_univ/router/app_router.dart';
+import 'package:daelim_univ/screens/login/login_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,10 +12,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      darkTheme: ThemeData(useMaterial3: true),
-      home: const LoginScreen(),
+    return MaterialApp.router(
+      routerConfig: router,
+      themeMode: debugBrightnessOverride == Brightness.dark
+          ? ThemeMode.dark
+          : ThemeMode.light,
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.black,
+      ),
     );
   }
 }
