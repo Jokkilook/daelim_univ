@@ -1,5 +1,4 @@
 import 'package:daelim_univ/router/app_router.dart';
-import 'package:daelim_univ/screens/login/login_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
