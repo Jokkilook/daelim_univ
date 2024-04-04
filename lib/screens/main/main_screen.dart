@@ -1,5 +1,4 @@
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {
@@ -11,7 +10,6 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Main"),
       ),
-      drawer: const Drawer(),
       child: const Placeholder(),
     );
   }

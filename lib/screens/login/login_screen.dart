@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:daelim_univ/common/widgets/app_icon_text_button.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
 import 'package:daelim_univ/screens/login/widgets/login_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:daelim_univ/common/app_assets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -62,12 +65,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppIconTextButton(
                   text: "로그인",
                   icon: Icons.login,
-                  onPressed: () {
+                  onPressed: () async {
                     var email = emailController.text;
                     var pw = pwController.text;
+
+                    //플러터에서 {}은 맵이니까 jsonEncode를 해서 JSON 형식으로 변환해줘야 한다.
+                    var response = await http.post(
+                        Uri.parse(
+                            "http://121.140.73.79:18000/functions/v1/auth/signup"),
+                        body: jsonEncode({
+                          "email": email,
+                          "password": pw,
+                          "name": "조성윤",
+                          "student_number": "202030330"
+                        }));
+
+                    var status = response.statusCode;
+
+                    if (status != 200) {
+                      return debugPrint(
+                          "에러코드:${response.statusCode.toString()}, ${response.body}");
+                    }
+
                     //if (email != "aaa" && pw != "1234") return;
 
-                    context.go('/main');
+                    // context.go('/main');
                   },
                 ),
               ],
