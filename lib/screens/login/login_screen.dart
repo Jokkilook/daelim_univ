@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      //resizeToAvoidBottomInset: true, //fale면 자판이 올라와도 화면이 안올라감
+      //resizeToAvoidBottomInset: true, //false면 자판이 올라와도 화면이 안올라감
       child: SafeArea(
         child: Container(
           height: double.infinity,
@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true,
                 ), //패스워드 입력
                 const SizedBox(height: 30),
+                //로그인 버튼
                 AppIconTextButton(
                   text: "로그인",
                   icon: Icons.login,
@@ -92,6 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     // context.go('/main');
                   },
                 ),
+                //회원가입 버튼
+                TextButton(
+                    onPressed: () => context.go("/signUp"),
+                    child: const Text("회원가입")),
               ],
             ),
           ),
