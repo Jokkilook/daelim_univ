@@ -1,9 +1,11 @@
 import 'package:daelim_univ/common/widgets/app_icon_text_button.dart';
+import 'package:daelim_univ/router/app_router.dart';
 import 'package:daelim_univ/screens/login/widgets/login_text_field.dart';
 import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -60,6 +62,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.pushReplacement(AppScreen.login);
+          },
+        ),
         title: const Text("회원가입"),
       ),
       body: SafeArea(
@@ -129,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 //플러터에서 {}은 맵이니까 jsonEncode를 해서 JSON 형식으로 변환해줘야 한다.
                 var response = await http.post(
                     Uri.parse(
-                        "http://175.197.109.158:60080/functions/v1/auth/signup"),
+                        "http://121.140.73.79:60080/functions/v1/auth/signup"),
                     body: jsonEncode({
                       "email": email,
                       "password": pw,

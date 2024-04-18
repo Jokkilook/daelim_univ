@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:daelim_univ/common/widgets/app_icon_text_button.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
 import 'package:daelim_univ/screens/login/widgets/login_text_field.dart';
+import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:daelim_univ/common/app_assets.dart';
 import 'package:go_router/go_router.dart';
@@ -24,6 +25,9 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     emailController = TextEditingController();
     pwController = TextEditingController();
+    emailController.value =
+        const TextEditingValue(text: "202030330@daelim.ac.kr");
+    pwController.value = const TextEditingValue(text: "abc123");
   }
 
   @override
@@ -70,27 +74,41 @@ class _LoginScreenState extends State<LoginScreen> {
                     var email = emailController.text;
                     var pw = pwController.text;
 
-                    //플러터에서 {}은 맵이니까 jsonEncode를 해서 JSON 형식으로 변환해줘야 한다.
-                    var response = await http.post(
-                        Uri.parse(
-                            "http://121.140.73.79:18000/functions/v1/auth/signup"),
-                        body: jsonEncode({
-                          "email": email,
-                          "password": pw,
-                          "name": "조성윤",
-                          "student_number": "202030330"
-                        }));
+                    //then 을 쓰면 에러가 나고 난 뒤에도 처리를 해 줘야함
+                    var response = await http
+                        .post(
+                            Uri.parse(
+                                "http://121.140.73.79:60080/functions/v1/auth/login"),
+                            body: jsonEncode({
+                              "email": email,
+                              "password": pw,
+                            }))
+                        .timeout(
+                          const Duration(seconds: 5),
+                        )
+                        .catchError((e, stackTrace) {
+                      Log.red(stackTrace);
+                      return http.Response("$e", 401);
+                    });
 
                     var status = response.statusCode;
 
                     if (status != 200) {
-                      return debugPrint(
+                      //async 함수 내에서 일반 함수로 감쌈
+                      Future.delayed(Duration.zero, () {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("로그인 실패"),
+                          duration: Duration(milliseconds: 1000),
+                        ));
+                      });
+                      return Log.red(
                           "에러코드:${response.statusCode.toString()}, ${response.body}");
                     }
 
-                    //if (email != "aaa" && pw != "1234") return;
+                    Log.blue(response.body);
 
-                    // context.go('/main');
+                    context.pushReplacement('/main');
                   },
                 ),
                 //회원가입 버튼
