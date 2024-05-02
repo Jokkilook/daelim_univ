@@ -95,7 +95,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   );
                 },
               )
-
         //const Placeholder(),
         );
   }

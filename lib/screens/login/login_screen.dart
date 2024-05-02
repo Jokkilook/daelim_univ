@@ -1,13 +1,12 @@
-import 'dart:convert';
-
 import 'package:daelim_univ/common/widgets/app_icon_text_button.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/screens/login/widgets/login_text_field.dart';
 import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:daelim_univ/common/app_assets.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  //클래스로 Get 찾기
+  final _controller = Get.find<AuthController>();
   late TextEditingController emailController;
   late TextEditingController pwController;
 
@@ -36,6 +37,28 @@ class _LoginScreenState extends State<LoginScreen> {
     pwController.dispose();
 
     super.dispose();
+  }
+
+  void _signIn() async {
+    var email = emailController.text;
+    var pw = pwController.text;
+
+    var result = await _controller.signIn(email: email, pw: pw);
+
+    if (!result.$1) {
+      //async 함수 내에서 일반 함수로 감쌈
+      Future.delayed(Duration.zero, () {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("로그인 실패\n${result.$2}"),
+          duration: const Duration(milliseconds: 1000),
+        ));
+      });
+      return Log.red("에러: ${result.$2}");
+    }
+
+    Log.blue(result.$2);
+
+    context.pushReplacement('/main');
   }
 
   @override
@@ -70,46 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppIconTextButton(
                   text: "로그인",
                   icon: Icons.login,
-                  onPressed: () async {
-                    var email = emailController.text;
-                    var pw = pwController.text;
-
-                    //then 을 쓰면 에러가 나고 난 뒤에도 처리를 해 줘야함
-                    var response = await http
-                        .post(
-                            Uri.parse(
-                                "http://121.140.73.79:60080/functions/v1/auth/login"),
-                            body: jsonEncode({
-                              "email": email,
-                              "password": pw,
-                            }))
-                        .timeout(
-                          const Duration(seconds: 5),
-                        )
-                        .catchError((e, stackTrace) {
-                      Log.red(stackTrace);
-                      return http.Response("$e", 401);
-                    });
-
-                    var status = response.statusCode;
-
-                    if (status != 200) {
-                      //async 함수 내에서 일반 함수로 감쌈
-                      Future.delayed(Duration.zero, () {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text("로그인 실패"),
-                          duration: Duration(milliseconds: 1000),
-                        ));
-                      });
-                      return Log.red(
-                          "에러코드:${response.statusCode.toString()}, ${response.body}");
-                    }
-
-                    Log.blue(response.body);
-
-                    context.pushReplacement('/main');
-                  },
+                  onPressed: _signIn,
                 ),
                 //회원가입 버튼
                 TextButton(

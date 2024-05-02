@@ -39,6 +39,7 @@ dependencies:
   easy_extension:
     git:
       url: https://github.com/scadasystems/Easy-Extension.git
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

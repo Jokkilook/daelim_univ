@@ -19,7 +19,7 @@ class AppScaffold extends StatelessWidget {
     return Scaffold(
         floatingActionButton: floatingActionButton,
         appBar: appBar,
-        drawer: const AppDrawer(),
+        drawer: AppDrawer(),
         body: SafeArea(
           child: child,
         ),
