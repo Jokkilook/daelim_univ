@@ -69,18 +69,30 @@ class _GalleryScreenState extends State<GalleryScreen> {
                       var item = _controller.rxGalleryItem.value?.hits[index];
 
                       return InkWell(
-                        onTap: () {
-                          Log.green(item);
-                          context.pushNamed(AppScreen.galleryDetail,
+                        onTap: () async {
+                          // if (item?.largeImageURL != null) {
+                          //   await precacheImage(
+                          //       Image.network(item?.largeImageURL ?? "").image,
+                          //       context);
+                          // }
+
+                          if (context.mounted) {
+                            context.pushNamed(
+                              AppScreen.galleryDetail,
                               pathParameters: {
                                 "id": (item?.id ?? -1).toString(),
-                              });
+                              },
+                            );
+                          }
                         },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            item?.webformatURL ?? "",
-                            fit: BoxFit.cover,
+                          child: Hero(
+                            tag: item?.id ?? "",
+                            child: Image.network(
+                              item?.webformatURL ?? "",
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       );

@@ -1,8 +1,10 @@
 import 'package:daelim_univ/models/user_data.dart';
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
+import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,6 +22,24 @@ class AppDrawer extends StatelessWidget {
       title: Text(title),
     );
   }
+
+  List<dynamic> get _tilesData => [
+        {
+          "icon": Icons.home,
+          "title": "HOME",
+          "path": AppScreen.main,
+        },
+        {
+          "icon": Icons.photo_library,
+          "title": "GALLERY",
+          "path": AppScreen.gallery,
+        },
+        {
+          "icon": Icons.cyclone,
+          "title": "LIFE CYCLE",
+          "path": AppScreen.lifecycle,
+        }
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,18 +61,12 @@ class AppDrawer extends StatelessWidget {
           )),
           Expanded(
             child: ListView(
-              children: [
-                _listTile(context,
-                    icon: Icons.home, title: "HOME", path: AppScreen.main),
-                _listTile(context,
-                    icon: Icons.photo_library,
-                    title: "GALLERY",
-                    path: AppScreen.gallery),
-                _listTile(context,
-                    icon: Icons.cyclone,
-                    title: "LIFE CYCLE",
-                    path: AppScreen.lifecycle),
-              ],
+              children: _tilesData.mapIndexed((index, e) {
+                return _listTile(context,
+                        path: e["path"], icon: e["icon"], title: e["title"])
+                    .animate()
+                    .slideX(delay: (index * 300).toMillisecond);
+              }).toList(),
             ),
           ),
         ],

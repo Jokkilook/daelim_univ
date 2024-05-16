@@ -40,6 +40,7 @@ dependencies:
     git:
       url: https://github.com/scadasystems/Easy-Extension.git
   get: ^4.6.6
+  flutter_animate: ^4.5.0
 
 dev_dependencies:
   flutter_test:
