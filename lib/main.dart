@@ -1,11 +1,14 @@
+import 'package:daelim_univ/common/helpers/storage_helper.dart';
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
+import 'package:daelim_univ/screens/theme/app_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
   Get.put(AuthController());
+  StorageHelper.init();
   runApp(const MyApp());
 }
 
@@ -20,17 +23,12 @@ class MyApp extends StatelessWidget {
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
       //Get 쓰기 전에 쓰던 라우터  routerConfig: router,
-      themeMode: debugBrightnessOverride == Brightness.dark
-          ? ThemeMode.dark
-          : ThemeMode.light,
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.black,
-      ),
+      themeMode: StorageHelper.thememode,
+      // debugBrightnessOverride == Brightness.dark
+      //     ? ThemeMode.dark
+      //     : ThemeMode.light,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
     );
   }
 }

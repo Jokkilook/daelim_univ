@@ -1,14 +1,9 @@
-import 'dart:convert';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
-import 'package:daelim_univ/models/gallery_item.dart';
-import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/provider/gallery_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
-import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 
 class GalleryScreen extends StatefulWidget {
   const GalleryScreen({super.key});
@@ -21,8 +16,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
   final _controller = Get.put(GalleryController());
 
   late final ScrollController _scrollController;
-
-  GalleryItem? _galleryItem;
 
   @override
   void initState() {
