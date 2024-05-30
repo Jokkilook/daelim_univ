@@ -1,10 +1,12 @@
 import 'package:daelim_univ/common/widgets/app_icon_text_button.dart';
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:daelim_univ/router/app_router.dart';
 import 'package:daelim_univ/screens/login/widgets/login_text_field.dart';
 import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -68,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             context.pushReplacement(AppScreen.login);
           },
         ),
-        title: const Text("회원가입"),
+        title: Text(AppString.signUp.tr),
       ),
       body: SafeArea(
         child: Column(
@@ -108,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             AppIconTextButton(
-              text: "회원가입",
+              text: AppString.signUp,
               icon: Icons.person,
               onPressed: () async {
                 var emailCheck = _emailKey.currentState?.validate() ?? false;

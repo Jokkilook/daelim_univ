@@ -1,3 +1,4 @@
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:daelim_univ/models/user_data.dart';
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
@@ -26,17 +27,17 @@ class AppDrawer extends StatelessWidget {
   List<dynamic> get _tilesData => [
         {
           "icon": Icons.home,
-          "title": "HOME",
+          "title": AppString.home.tr,
           "path": AppScreen.main,
         },
         {
           "icon": Icons.photo_library,
-          "title": "GALLERY",
+          "title": AppString.gallery.tr,
           "path": AppScreen.gallery,
         },
         {
           "icon": Icons.cyclone,
-          "title": "LIFE CYCLE",
+          "title": AppString.lifecycle.tr,
           "path": AppScreen.lifecycle,
         }
       ];
@@ -72,7 +73,7 @@ class AppDrawer extends StatelessWidget {
           const Divider(height: 0),
           ListTile(
             onTap: () => context.push(AppScreen.setting),
-            title: const Text("앱 설정"),
+            title: Text(AppString.appSetting.tr),
             trailing: const Icon(Icons.settings),
           )
         ],

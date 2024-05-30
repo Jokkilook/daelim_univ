@@ -1,5 +1,6 @@
 import 'package:daelim_univ/common/helpers/storage_helper.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:daelim_univ/provider/settring_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
 import 'package:day_night_themed_switch/day_night_themed_switch.dart';
@@ -20,7 +21,7 @@ class SettingScreen extends StatelessWidget {
     return AppScaffold(
       enableDrawer: false,
       appBar: AppBar(
-        title: const Text("앱 설정"),
+        title: Text(AppString.appSetting.tr),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),

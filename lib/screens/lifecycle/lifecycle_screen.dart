@@ -1,7 +1,9 @@
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
 
 class LifecycleScreen extends StatefulWidget {
   const LifecycleScreen({super.key});
@@ -44,7 +46,7 @@ class _LifecycleScreenState extends State<LifecycleScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
         appBar: AppBar(
-          title: const Text("라이프 사이클 테스트"),
+          title: Text(AppString.lifecycle.tr),
         ),
         child: Center(child: Text(_state.toString())));
   }

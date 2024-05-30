@@ -1,3 +1,4 @@
+import 'package:daelim_univ/common/helpers/locale_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -5,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class StorageHelper {
   static late SharedPreferences prefs;
   static const String isDarkModeKey = "isDarkMode";
+  static const String localeKey = "locale";
 
   static Future init() async {
     prefs = await SharedPreferences.getInstance();
@@ -25,9 +27,51 @@ class StorageHelper {
     return isDarkMode;
   }
 
-  static ThemeMode thememode = isDarkMode == null
-      ? ThemeMode.system
-      : isDarkMode
-          ? ThemeMode.dark
-          : ThemeMode.light;
+  static final ThemeMode thememode = isDarkMode //
+      ? ThemeMode.dark
+      : ThemeMode.light;
+
+  ///국제화 코드 설정
+  static Future<void> setLocale(Locale locale) async {
+    await prefs.setString(localeKey, locale.languageCode);
+    Get.updateLocale(locale);
+  }
+
+  static Future<bool> removeLocale() {
+    return prefs.remove(localeKey);
+  }
+
+  static Locale get locale {
+    final languageTag = prefs.getString(localeKey);
+
+    if (languageTag == null) {
+      return Get.deviceLocale ?? LocaleHelper.english;
+    }
+
+    //if 문
+    // if (languageTag == LocaleHelper.korean.languageCode) {
+    //   return LocaleHelper.korean;
+    // } else {
+    //   return LocaleHelper.english;
+    // }
+
+    //if lamda
+    // return languageTag == LocaleHelper.korean.languageCode
+    //     ? LocaleHelper.korean
+    //     : LocaleHelper.english;
+
+    //switch
+    // switch (languageTag) {
+    //   case "ko":
+    //     return LocaleHelper.korean;
+    //   default:
+    //     return LocaleHelper.english;
+    // }
+
+    //switch reject
+    return switch (languageTag) {
+      "ko" => LocaleHelper.korean,
+      _ => LocaleHelper.english
+    };
+  }
 }

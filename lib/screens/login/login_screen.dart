@@ -1,5 +1,6 @@
 import 'package:daelim_univ/common/widgets/app_icon_text_button.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/screens/login/widgets/login_text_field.dart';
 import 'package:easy_extension/easy_extension.dart';
@@ -79,26 +80,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 ), //앱 로고
                 const SizedBox(height: 100),
                 LoginTextField(
-                  labelText: "이메일",
+                  labelText: AppString.email.tr,
                   controller: emailController,
                 ), //아이디 입력
                 const SizedBox(height: 50),
                 LoginTextField(
-                  labelText: "비밀번호",
+                  labelText: AppString.password.tr,
                   controller: pwController,
                   obscureText: true,
                 ), //패스워드 입력
                 const SizedBox(height: 30),
                 //로그인 버튼
                 AppIconTextButton(
-                  text: "로그인",
+                  text: AppString.login.tr,
                   icon: Icons.login,
                   onPressed: _signIn,
                 ),
                 //회원가입 버튼
                 TextButton(
                     onPressed: () => context.go("/signUp"),
-                    child: const Text("회원가입")),
+                    child: Text(AppString.signUp.tr)),
               ],
             ),
           ),
