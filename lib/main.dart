@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp.router(
+      debugShowCheckedModeBanner: false,
       //Get 쓰면 아래 3개로 라우터 설정
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,

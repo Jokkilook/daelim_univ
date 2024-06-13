@@ -1,4 +1,4 @@
-import 'package:daelim_univ/common/helpers/storage_helper.dart';
+//import 'package:daelim_univ/common/helpers/storage_helper.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
 import 'package:daelim_univ/localization/app_string.dart';
 import 'package:daelim_univ/provider/settring_controller.dart';
@@ -16,7 +16,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SettingController());
-    final RxBool rxIsDarkMode = (StorageHelper.isDarkMode ?? false).obs;
+    //final RxBool rxIsDarkMode = (StorageHelper.isDarkMode ?? false).obs;
 
     return AppScaffold(
       enableDrawer: false,
